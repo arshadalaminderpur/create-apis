@@ -30,7 +30,7 @@ public class TransactionController {
 
 
    @GetMapping("/code")
-    public int codeKaro(){
+    public int codeKaroNahiTo(){
         int []arr={-1,-8,0,5,-9};
         func(1,arr);
         log.info("arshad feature1 branch");
