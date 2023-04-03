@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Slf4j
@@ -34,6 +35,7 @@ public class TransactionService {
             Transaction transaction=new Transaction();
             transaction.setBookId(bookId);
             transaction.setBorrowerId(borrowerId);
+            transaction.setDate(LocalDate.now());
             transactionRepository.save(transaction);
             return ResponseEntity.status(HttpStatus.CREATED).body(book);
         }
