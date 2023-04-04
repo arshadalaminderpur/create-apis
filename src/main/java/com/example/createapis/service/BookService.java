@@ -1,14 +1,13 @@
 package com.example.createapis.service;
 
-import com.example.createapis.Entity.Book;
+import com.example.createapis.model.Book;
 import com.example.createapis.repository.BookRepository;
-import com.example.createapis.request.BookPojo;
+import com.example.createapis.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,16 +29,40 @@ public class BookService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("content not found");
     }
 
-    public ResponseEntity updateBook(long id, Book book) {
+    public  ResponseEntity<Response> updateBookQuantity(long id, Book bookRequest) {
 
-        Optional<Book> bookDb=repository.findById(id);
-        if(bookDb.isPresent()){
-            repository.deleteById(id);
-            book.setId(id);
-            repository.save(book);
-            return ResponseEntity.status(HttpStatus.OK).body("updated successfully");
+        Optional<Book> bookOptional=repository.findById(id);
+        Response response=new Response();
+        if(!bookOptional.isPresent()){
+            response.setStatus("Book not found with this id");
+            response.setMessage("please enter a valid book id");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("content not found");
+        Book book=bookOptional.get();
+        book.setNoCopies(bookRequest.getNoCopies());
+        repository.save(book);
+        response.setStatus("SUCCESSFULL");
+        response.setMessage("Book quantity updated successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+
+    }
+
+    public  ResponseEntity<Response> updateBookPrice(long id, Book bookRequest) {
+
+        Optional<Book> bookOptional=repository.findById(id);
+        Response response=new Response();
+        if(!bookOptional.isPresent()){
+            response.setStatus("Book not found with this id");
+            response.setMessage("please enter a valid book id");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        Book book=bookOptional.get();
+        book.setPrice(bookRequest.getPrice());
+        repository.save(book);
+        response.setStatus("SUCCESSFULL");
+        response.setMessage("book price updation successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
 
 
     }

@@ -1,6 +1,6 @@
 package com.example.createapis.repository;
 
-import com.example.createapis.Entity.Transaction;
+import com.example.createapis.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

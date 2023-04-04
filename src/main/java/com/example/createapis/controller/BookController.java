@@ -1,6 +1,6 @@
 package com.example.createapis.controller;
 
-import com.example.createapis.Entity.Book;
+import com.example.createapis.model.Book;
 import com.example.createapis.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,19 @@ public class BookController {
 
     }
 
-    @RequestMapping(value = "/delete{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete-book/{id}",method = RequestMethod.DELETE)
     public ResponseEntity deleteBook(@PathVariable long id){
         return service.deleteBook(id);
     }
 
-    @RequestMapping(value = "/update{id}",method = RequestMethod.PUT)
-    public ResponseEntity updateBook(@PathVariable long id,@RequestBody Book book){
-        return service.updateBook(id,book);
+    @RequestMapping(value = "/update-book-quantity/{id}",method = RequestMethod.PUT)
+    public ResponseEntity updateBookQuantity(@PathVariable long id,@RequestBody Book book){
+        return service.updateBookQuantity(id,book);
+    }
+
+    @RequestMapping(value = "/update-book-price/{id}",method = RequestMethod.PUT)
+    public ResponseEntity updateBookPrice(@PathVariable long id,@RequestBody Book book){
+        return service.updateBookPrice(id,book);
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.createapis.Entity;
+package com.example.createapis.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,13 +8,11 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Book {
+public class Borrower {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String title;
-    private String author;
-    private String publisher;
-    private int price;
+    private String name;
+    private String phone;
 }

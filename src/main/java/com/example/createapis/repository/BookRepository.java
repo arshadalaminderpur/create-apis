@@ -1,6 +1,6 @@
 package com.example.createapis.repository;
 
-import com.example.createapis.Entity.Book;
+import com.example.createapis.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

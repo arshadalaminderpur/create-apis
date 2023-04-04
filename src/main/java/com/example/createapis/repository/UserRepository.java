@@ -1,6 +1,6 @@
 package com.example.createapis.repository;
 
-import com.example.createapis.Entity.Person;
+import com.example.createapis.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

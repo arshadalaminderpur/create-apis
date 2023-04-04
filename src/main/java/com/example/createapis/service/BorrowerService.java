@@ -1,16 +1,16 @@
 package com.example.createapis.service;
 
-import com.example.createapis.Entity.Book;
-import com.example.createapis.Entity.Borrower;
-import com.example.createapis.repository.BookRepository;
+import com.example.createapis.model.Borrower;
 import com.example.createapis.repository.BorrowerRepository;
+import com.example.createapis.response.Response;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Transactional
 @Service
 public class BorrowerService {
 
@@ -30,16 +30,25 @@ public class BorrowerService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("content not found");
     }
 
-    public ResponseEntity updateBorrower(long id, Borrower borrower) {
+    public ResponseEntity<Response> updateBorrower(long id, Borrower borrowerRequest) {
 
-        Optional<Borrower> bookDb=repository.findById(id);
-        if(bookDb.isPresent()){
-            repository.deleteById(id);
-            borrower.setId(id);
-            repository.save(borrower);
-            return ResponseEntity.status(HttpStatus.OK).body("updated successfully");
+        Optional<Borrower> borrowerOptional=repository.findById(id);
+        Response response=new Response();
+        if(!borrowerOptional.isPresent()) {
+            response.setStatus("invalid borrower id");
+            response.setMessage("please enter valid borrower id");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("content not found");
+        Borrower borrower=borrowerOptional.get();
+        borrower.setPhone(borrowerRequest.getPhone());
+        borrower.setName(borrowerRequest.getName());
+        repository.save(borrower);
+        response.setStatus("SUCCESSFULL");
+        response.setMessage("Updation successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+
+
 
 
     }

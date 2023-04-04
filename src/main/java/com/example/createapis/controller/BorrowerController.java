@@ -1,8 +1,7 @@
 package com.example.createapis.controller;
 
-import com.example.createapis.Entity.Book;
-import com.example.createapis.Entity.Borrower;
-import com.example.createapis.service.BookService;
+import com.example.createapis.model.Borrower;
+import com.example.createapis.response.Response;
 import com.example.createapis.service.BorrowerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class BorrowerController {
     }
 
     @RequestMapping(value = "/update-borrower{id}",method = RequestMethod.PUT)
-    public ResponseEntity updateBorrower(@PathVariable long id,@RequestBody Borrower borrower){
+    public ResponseEntity<Response> updateBorrower(@PathVariable long id, @RequestBody Borrower borrower){
         return service.updateBorrower(id,borrower);
     }
 

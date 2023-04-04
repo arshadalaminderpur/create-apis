@@ -1,6 +1,6 @@
 package com.example.createapis.controller;
 
-import com.example.createapis.Entity.Book;
+import com.example.createapis.response.Response;
 import com.example.createapis.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class TransactionController {
     TransactionService service;
 
     @PostMapping("/borrow-book/{bookId}/{borrowerId}")
-    public ResponseEntity<Optional<Book>> borrowBook(@PathVariable long bookId, @PathVariable long borrowerId){
+    public ResponseEntity<Response> borrowBook(@PathVariable long bookId, @PathVariable long borrowerId){
         log.info("book id="+bookId+" borrowerId="+borrowerId);
         return service.borrowBook(bookId,borrowerId);
 
@@ -27,6 +27,8 @@ public class TransactionController {
                                      @PathVariable("borrowerId") long borrowerId){
         return service.deleteBook(bookId,borrowerId);
     }
+
+
 
 
    @GetMapping("/code")

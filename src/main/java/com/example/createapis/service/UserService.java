@@ -1,9 +1,9 @@
 package com.example.createapis.service;
 
-import com.example.createapis.Entity.Person;
+import com.example.createapis.model.Person;
 
 import com.example.createapis.repository.UserRepository;
-import com.example.createapis.response.UserResponse;
+import com.example.createapis.response.Response;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,36 +20,36 @@ public class UserService {
 
     @Autowired
     private UserRepository repository;
-    public UserResponse authenticateUser(Person request) {
+    public Response authenticateUser(Person request) {
         List<Person> users=repository.findByUserid(request.getUserid());
-        UserResponse userResponse=new UserResponse();
+        Response userResponse=new Response();
         if(users.size()==0){
-            userResponse.setToken("User doesn't exist");
+            userResponse.setStatus("User doesn't exist");
             return userResponse;
         }
         log.info("users response from repository "+users.toString());
-        userResponse.setToken("valid user");
+        userResponse.setStatus("valid user");
         log.info("returning response from service "+userResponse.toString());
         return userResponse;
 
 
     }
 
-    public ResponseEntity<UserResponse> addUserIntoDB(Person person) {
+    public ResponseEntity<Response> addUserIntoDB(Person person) {
         log.info("person data "+person.toString());
         List<Person> user=null;
-        UserResponse userResponse=new UserResponse();
+        Response userResponse=new Response();
         user= repository.findByUserid(person.getUserid());
         log.info("data returned from db "+user.toString()+" size="+user.size());
         if(user.size()!=0) {
-            userResponse.setToken("Duplicate user");
+            userResponse.setStatus("Duplicate user");
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(userResponse);
 
         }
 
             repository.save(person);
 
-            userResponse.setToken("Signup successfully");
+            userResponse.setStatus("Signup successfully");
             return ResponseEntity.status(HttpStatus.OK).body(userResponse);
 
     }
