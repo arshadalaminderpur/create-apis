@@ -22,6 +22,12 @@ public class TransactionController {
         return service.borrowBook(bookId,borrowerId);
 
     }
+    @PostMapping("/return-book/{bookId}/{borrowerId}")
+    public ResponseEntity<Response> returnBook(@PathVariable long bookId, @PathVariable long borrowerId){
+        log.info("book id="+bookId+" borrowerId="+borrowerId);
+        return service.returnBook(bookId,borrowerId);
+
+    }
     @RequestMapping(value = "/delete-book/{bookId}/{borrowerId}",method = RequestMethod.DELETE)
     public ResponseEntity deleteBook(@PathVariable("bookId") long bookId,
                                      @PathVariable("borrowerId") long borrowerId){
